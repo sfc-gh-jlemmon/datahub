@@ -75,12 +75,13 @@ class SnowflakeCommonMixin:
     @staticmethod
     def create_snowsight_base_url(
         account_locator: str,
+        regionless_org_account: str,
         cloud_region_id: str,
         cloud: str,
         privatelink: bool = False,
     ) -> Optional[str]:
         if privatelink:
-            url = f"https://app.{account_locator}.{cloud_region_id}.privatelink.snowflakecomputing.com/"
+            url = f"https://app-{regionless_org_account}.privatelink.snowflakecomputing.com/"
         elif cloud == SNOWFLAKE_DEFAULT_CLOUD:
             url = f"https://app.snowflake.com/{cloud_region_id}/{account_locator}/"
         else:

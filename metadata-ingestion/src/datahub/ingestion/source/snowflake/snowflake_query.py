@@ -49,6 +49,13 @@ class SnowflakeQuery:
         return "select CURRENT_REGION()"
 
     @staticmethod
+    def current_regionless_org_account() -> str:
+        return """
+            select REPLACE(t.VALUE:host::VARCHAR, '.snowflakecomputing.com', '') as REGIONLESS_ORG_ACCT
+            FROM TABLE(FLATTEN(input => PARSE_JSON(SYSTEM$WHITELIST()))) as t
+            WHERE t.VALUE:type::VARCHAR = 'SNOWFLAKE_DEPLOYMENT_REGIONLESS';"""
+
+    @staticmethod
     def current_version() -> str:
         return "select CURRENT_VERSION()"
 

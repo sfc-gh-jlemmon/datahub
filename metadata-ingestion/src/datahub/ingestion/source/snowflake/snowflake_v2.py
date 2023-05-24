@@ -1492,6 +1492,10 @@ class SnowflakeV2Source(
             for db_row in self.query(SnowflakeQuery.current_region()):
                 region = db_row["CURRENT_REGION()"]
 
+            for db_row in self.query(SnowflakeQuery.current_regionless_org_account()):
+                regionless_org_account = db_row["REGIONLESS_ORG_ACCT"]
+
+
             self.report.account_locator = account_locator
             self.report.region = region
 
@@ -1508,6 +1512,7 @@ class SnowflakeV2Source(
             return self.create_snowsight_base_url(
                 account_locator,
                 cloud_region_id,
+                regionless_org_account,
                 cloud,
                 self.config.account_id.endswith(".privatelink"),  # type:ignore
             )
